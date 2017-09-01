@@ -15,9 +15,9 @@ NKG1000115469:~ # rpm -qa | wc -l
 ```
 Nessus扫描结果对比:
 * 最小化安装环境
-![Nessus-Report](/images/nessus_mini_os.png) 
+![Nessus-Report](images/nessus_mini_os.png) 
 * 非最小化安装环境
-![Nessus-Report](/images/nessus_normal_os.png) 
+![Nessus-Report](images/nessus_normal_os.png) 
 
 可见操作系统最小化安装可以大幅降低系统默认安装包数量，减少Nessus扫描安全漏洞数量。
 
