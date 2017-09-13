@@ -2,10 +2,12 @@
 及时更新操作系统内核和软件版本，解决已披露的安全漏洞，降低系统被攻击的风险。
 ### 设置BIOS密码
 设置BIOS密码，系统在启动时会要求输入该密码，正确输入后，系统才会正常启动。(对远程启动系统存在影响，一般生产环境不会设置BIOS密码)
-![BIOS Password](images/bios-password.png)
+<br>
+![BIOS Password](images/bios-password.jpg)
 ### 设置GRUB密码
 设置GRUB密码，系统启动时如果要修改启动参数，则必须先输入该密码，可以防止系统启动参数被恶意修改。
 * init
+
 ```
 SLES11-3:~ # grub-md5-crypt    //先生成一个加密密码
 Password: 
@@ -28,6 +30,7 @@ title SUSE Linux Enterprise Server 11 SP3 - 3.0.76-0.11
 ```
 
 * systemd
+
 ```
 SUSE12-2-MinOS:~ # grub2-mkpasswd-pbkdf2    //先生成一个加密密码
 Enter password: 
@@ -60,6 +63,7 @@ SUSE12-2-MinOS:~ #
 
 设置系统运行级别(注意需重启系统才能生效):
 * init
+
 获取当前系统运行级别:
 ```
 SLES11-3:~ # runlevel
@@ -73,6 +77,7 @@ id:3:initdefault:
 ```
 
 * systemd
+
 获取当前系统运行级别:
 ```
 NKG1000115469:~ # systemctl get-default
@@ -97,6 +102,7 @@ NKG1000115469:~ #
 ### 禁用ctrl-alt-delete
 Linux下组合键ctrl-alt-delete可以实现重启操作系统，对于生产服务器，需禁止该组合键，防止误操作导致系统重启，导致业务服务不可用。
 * init
+
 将`/etc/inittab`文件中包含ctrlaltdel的行注释掉:
 ```
 # what to do when CTRL-ALT-DEL is pressed
@@ -104,6 +110,7 @@ Linux下组合键ctrl-alt-delete可以实现重启操作系统，对于生产服
 ```
 
 * systemd
+
 将`/usr/lib/systemd/system/ctrl-alt-del.target`链接到`/dev/null`:
 ```
 NKG1000115469:~ # ls -l /usr/lib/systemd/system/ctrl-alt-del.target    //默认情况下是链接到reboot.target
@@ -114,13 +121,17 @@ NKG1000115469:~ # systemctl daemon-reload
 NKG1000115469:~ # 
 ```
 * GUI
+
 对于图形化界面，需要按照如下步骤将Logout设置的快捷键禁用掉:
+<br>
 Applications -> System Tools -> Settings -> Keyboard -> Shortcuts -> System
-![gui-disable-ctrl-alt-delete](images/gui-disable-ctrl-alt-delete.png)
+<br>
+![gui-disable-ctrl-alt-delete](images/gui-disable-ctrl-alt-delete.gif)
 
 ### 单用户模式下启用认证
 设置在进入单用户模式时，需要进行用户认证，防止恶意用户直接使用root用户无认证进入系统。
 * init
+
 编辑`/etc/inittab`文件，设置:
 ```
 # what to do in single-user mode
@@ -129,6 +140,7 @@ ls:S:wait:/etc/init.d/rc S
 ```
 
 * systemd
+
 文件`/usr/lib/systemd/system/rescue.service`和`/usr/lib/systemd/system/emergency.service`需包含以下内容:
 ```
 [Service]
