@@ -1,5 +1,6 @@
 ## SK-OS
 Linux操作系统安全技术知识。
+<br>
 ![linux-logo](images/linux-logo.jpg)
 #### 安装/Install
 * [最小化安装](mini_install.md)
