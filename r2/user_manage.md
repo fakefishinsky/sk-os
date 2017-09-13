@@ -1,8 +1,10 @@
 ## 用户&组管理
 用户是操作系统的使用主体，合理管理用户可防止用户被恶意利用，降低系统被攻击的风险。
+<br>
 ![user-logo](images/user-logo.png)
 ### 合理规划用户&组
 用户和用户组是Linux操作系统上进行权限控制的关键因素，合理规划用户和用户组对系统文件权限访问控制有重要意义。
+<br>
 先规划用户组，如sshusers、ftpusers等:
 ```
 root@sles:~ # groupadd sshusers
@@ -16,6 +18,7 @@ root@sles:~ # useradd -G sshusers appmanager    #运维管理账号
 ```
 ### 禁用系统功能账号
 Linux操作系统默认安装完，会存在一些不会用到的系统功能账号，需要将其禁用掉，防止因无人管理被黑客利用。
+<br>
 如下一些常见的系统功能账号:
 ```
 #file: /etc/passwd
