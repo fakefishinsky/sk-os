@@ -1,9 +1,11 @@
 ## 用户口令安全
 口令是Linux服务器上最常用的用户认证凭证，用户口令一旦泄露或被猜解将严重威胁服务器的安全。
+<br>
 ![password-logo](images/password-logo.jpg)
 ### 设置口令有效期
 定期修改用户密码是个很好的习惯，防止用户长期使用一个密码，增加口令被暴力破解成功的风险。
 * 新增用户
+
 file: /etc/login.defs
 ```
 #
@@ -18,6 +20,7 @@ PASS_MIN_DAYS	7
 PASS_WARN_AGE	7
 ```
 * 现有用户
+
 ```
 NKG1000115469:~ # chage -l foo    //使用chage -l查看
 Last password change				: Sep 06, 2017
@@ -63,8 +66,10 @@ Changing password for foo.
 ```
 ### 口令加密算法
 口令加密算法一般使用不可逆的HASH算法，但使用不安全的HASH算法加密的口令很容易被破解。
+<br>
 Linux系统上口令加密通常使用两个PAM模块，pam_unix.so或pam_unix2.so。
 * pam_unix
+
 在`/etc/login.defs`文件中配置:
 ```
 ENCRYPT_METHOD SHA512
@@ -74,11 +79,13 @@ ENCRYPT_METHOD SHA512
 password	sufficient	pam_unix.so	use_authtok shadow try_first_pass sha512
 ```
 * pam_unix2
+
 在`/etc/default/passwd`文件中配置:
 ```
 CRYPT_FILES=sha512
 ```
 * 加密算法判断
+
 根据`/etc/shadow`文件中的第2个域判断:
 ```
 foo:$6$xxx:0:7:90:10:::
@@ -94,8 +101,10 @@ foo:$6$xxx:0:7:90:10:::
 
 ### 口令复杂度校验
 设置强口令、增加口令复杂度，可降低口令被破解的可能性。
+<br>
 Linux系统上口令复杂度校验通常使用两个PAM模块，pam_cracklib.so(常用)或pam_pwcheck.so。
 * pam_cracklib
+
 示例: 最小长度14，至少包含4种字符(大写、小写、数字、特殊字符)，禁止包含用户名，对root用户生效
 ```
 SUSE12-2:~ # cat /etc/pam.d/common-password
@@ -105,6 +114,7 @@ password	requisite	pam_cracklib.so minlen=14 minclass=4 reject_username enforce_
 password	sufficient	pam_unix.so	use_authtok shadow try_first_pass sha512
 ```
 pam_cracklib.so模块常用参数:
+
 |参数|作用|
 |----|----|
 |difok=N|新密码和旧密码至少有几个字符不同, 默认值:5|
@@ -122,6 +132,7 @@ pam_cracklib.so模块常用参数:
 更多参考`man pam_cracklib`。
 
 * pam_pwcheck
+
 示例: 最小长度14，记录10个历史密码，对root用户生效
 ```
 SUSE11-3:~ # cat /etc/pam.d/common-password
@@ -131,6 +142,7 @@ password	requisite	pam_pwcheck.so minlen=14 remember=10 enforce_for_root
 password	required	pam_unix2.so use_authtok
 ```
 pam_pwcheck.so模块常用参数:
+
 |参数|作用|
 |----|----|
 |minlen=N|密码最小长度, 默认值:5|
@@ -140,8 +152,10 @@ pam_pwcheck.so模块常用参数:
 
 ### 限制使用历史密码
 限制使用历史密码，避免用户一直使用重复的密码，降低口令被猜解的可能性。
+<br>
 Linux系统上可以利用pam_pwhistory(常用)或pam_pwcheck模块实现该约束。
 * pam_pwhistory
+
 示例: 记录10个历史密码，对root用户生效
 ```
 SUSE12-2:~ # cat /etc/pam.d/common-password
