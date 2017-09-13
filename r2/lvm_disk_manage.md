@@ -96,12 +96,14 @@ LVM可以动态调整分区大小，无须重新启动机器。
 <br>
 #### 2.1 逻辑卷所在的卷组有剩余空间
 * 查看卷组剩余空间
+
 ![vgdisplay-freespace](images/vgdisplay_freespace.gif)
 <br>
 图14: 查看卷组剩余空间
 <br>
 可以看到vg_disk卷组还有2G剩余空间。
 * 扩展逻辑卷
+
 使用`lvextend`命令进行扩展:
 <br>
 ![lvextend](images/lvextend_1.png)
