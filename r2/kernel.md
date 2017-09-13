@@ -1,5 +1,6 @@
 ## 内核安全
 Linux内核是操作系统的重要组成部分，是系统上层服务运行的基础，[升级内核补丁](update_security_patch.md)、调整内核参数对提升系统整体安全性有重要意义。
+<br>
 ![kernel-logo](images/kernel-logo.jpg)
 ### 内核参数调整
 ```
@@ -72,7 +73,9 @@ SUSE12-2-MinOS:~ #
 SUSE12-2-MinOS:~ # sysctl -p    //使配置参数生效
 ```
 更多参考:
+<br>
 [sysctl-networking](sysctl-networking.txt)
+<br>
 [sysctl-kernel](sysctl-kernel.txt)
 ### 内核模块
 使用`lsmod`查看系统已加载的内核模块:
@@ -99,6 +102,7 @@ cdrom                  61440  1 sr_mod
 SUSE12-2-MinOS:~ # 
 ```
 对于使用不到的内核模块可以将其卸载并禁用，以降低系统安全风险:
+<br>
 例如利用DCCP模块漏洞([Linux kernel: CVE-2017-6074: DCCP double-free vulnerability](https://nvd.nist.gov/vuln/detail/CVE-2017-6074))实现本地提权到root用户: 
 ```
 root@ctf:~# lsmod | grep dccp  //查看是否加载了dccp模块
@@ -133,9 +137,10 @@ root@ctf:/home/fjl# whoami
 root
 root@ctf:/home/fjl#
 ```
-![DCCP-CVE-2017-6074-EXP](images/DCCP-CVE-2017-6074-EXP.png)
+![DCCP-CVE-2017-6074-EXP](images/DCCP-CVE-2017-6074-EXP.gif)
 
 对于上面这个安全漏洞，如果我们将DCCP模块卸载并禁用掉，则可规避该安全风险。
+<br>
 如下卸载DCCP模块后，漏洞不可利用:
 ```
 root@ctf:~# lsmod|grep dccp
@@ -152,6 +157,7 @@ fjl@ctf:~$
 
 卸载&禁用内核模块方法:
 * 卸载
+
 使用`rmmod`或者`modprobe -r`可以卸载已加载的内核模块，如果内核模板被占用(in use)，则需禁用后重启系统。
 ```
 root@ctf:~# lsmod | grep dccp
@@ -167,6 +173,7 @@ root@ctf:~#
 ```
 
 * 禁用
+
 在/etc/modprobe.d/目录下的任意以.conf结尾的文件中添加:
 `install <module-name> /bin/true`
 例如:
@@ -179,6 +186,7 @@ root@ctf:~#
 ```
 
 * 删除
+
 最干净的做法就是将不会用到的内核模块从服务器上移除:
 ```
 root@ctf:~# find /lib/modules -type f -name "dccp.ko" -print
@@ -196,10 +204,12 @@ root@ctf:~#
 ```
 
 一些不常用的内核模块:
+<br>
 dccp, sctp, rds, tipc, cramfs, freevxfs, jffs2, hfs, hfsplus, squashfs, udf, vfat, usb-storage
 
 ### 内核Rootkit
 Rootkit是一套由入侵者留在系统中的后门程序。Rootkit通常只有在系统已经被侵入并且获得root权限后才被安装进系统，并帮助入侵者长期控制系统，搜集主机和网络信息，并隐藏入侵者的痕迹。
+<br>
 rootkit示例，可以实现隐藏文件、隐藏进程、提权到root:
 ```
 root@suse:~ # insmod /opt/rootkit-sample.ko  //加载rootkit内核模块
