@@ -2,8 +2,10 @@
 及时更新操作系统内核和软件版本，解决已披露的安全漏洞，降低系统被攻击的风险。
 ![Vulnerabilities by year](images/vulnerabilities_by_year.png)
 ### 安全漏洞利用示例
-![DirtyCOW](images/dirty-cow.jpg)
+![DirtyCOW](images/dirty-cow.gif)
+<br>
 DirtyCOW 内核提权漏洞(CVE-2016-5195)
+<br>
 普通用户利用该漏洞提权到root用户:
 ```
 fjl@SLES11-3:~> gcc -lpthread cve_2016_5195_exp.c -o cve_2016_5195_exp
@@ -29,7 +31,8 @@ SLES11-3:/home/fjl # whoami
 root
 SLES11-3:/home/fjl #
 ```
-![DirtyCOW-CVE-2016-5195-EXP](images/DirtyCOW-CVE-2016-5195-EXP.png)
+![DirtyCOW-CVE-2016-5195-EXP](images/DirtyCOW-CVE-2016-5195-EXP.gif)
+<br>
 EXP源码: [cve_2016_5195_exp.c](cve_2016_5195_exp.c)
 ### 如何实施
 * 定期进行安全扫描(Nessus等)，解决安全扫描漏洞;
