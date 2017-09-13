@@ -1,11 +1,16 @@
 ## PAM认证
 Linux-PAM (Pluggable Authentication Modules for Linux) is a suite of shared libraries that enable the local system administrator to choose how applications authenticate users.
-![pam-logo](images/pam-logo.png)
+<br>
+![pam-logo](images/pam-logo.gif)
+<br>
 下面列举一些常用的PAM模块，获取更多指导请参考[The Linux-PAM Guides](http://www.linux-pam.org/Linux-PAM-html/)。
 ### pam_unix
 This is the standard Unix authentication module. It uses standard calls from the system's libraries to retrieve and set account information as well as authentication. 
+<br>
 最基础的一个PAM模块，负责用户认证、口令加密、账号信息、会话管理等，基本上会被所有的配置文件(/etc/pam.d/*)包含。
+<br>
 常见PAM后门就是修改的这个模块，达到记录用户密码、通用密码等功能。
+<br>
 例如，下面修改pam_unix/support.c里的_unix_verify_password函数，设置一个口令后门，任意用户输入"sigema_3.14159"即可认证成功:
 ```
 int _unix_verify_password(pam_handle_t * pamh, const char *name
@@ -51,6 +56,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
 ```
 ### pam_cracklib
 作用: 校验新设置口令的复杂度是否满足要求。
+<br>
 示例: 最小长度14，至少包含4种字符(大写、小写、数字、特殊字符)，禁止包含用户名，对root用户生效
 ```
 SUSE12-2:~ # cat /etc/pam.d/common-password
@@ -78,6 +84,7 @@ pam_cracklib.so模块常用参数:
 
 ### pam_pwhistory
 This module saves the last passwords for each user in order to force password change history and keep the user from alternating between the same password too frequently.
+<br>
 示例: 记录10个历史密码，对root用户生效
 ```
 SUSE12-2:~ # cat /etc/pam.d/common-password
@@ -88,6 +95,7 @@ password	sufficient	pam_unix.so	use_authtok shadow try_first_pass sha512
 ```
 ### pam_tally2
 用于防范暴力破解的一个模块，用户认证失败达到一定次数后将其锁定一段时间。
+<br>
 例如，对于SSH服务，可以编辑`/etc/pam.d/sshd`文件，添加：
 ```
 #%PAM-1.0
@@ -108,6 +116,7 @@ auth required pam_tally2.so onerr=fail audit silent deny=10 unlock_time=900
 
 ### pam_tally2_custom
 对pam_tally2模块进行修改，增加例外用户功能。
+<br>
 添加下面两个函数用于校验用户是否在例外列表中:
 ```
 /* ---- check if user is exist in DEFAULT_EXCEPTUSERS --- */
@@ -218,12 +227,14 @@ SLES11:~ #
 ```
 ### pam_faildelay
 认证失败后延时一段时间，预防暴力破解攻击。
+<br>
 如，设置SSH登录时输错1次密码，则延迟10秒才能在次输入密码，在`/etc/pam.d/sshd`文件中追加一行:
 ```
 auth  optional  pam_faildelay.so  delay=10000000  #delay单位为微秒
 ```
 ### pam_access
 用户登录访问控制，限制用户登录来源。
+<br>
 编辑`/etc/pam.d/common-account`，设置:
 ```
 account	required	pam_access.so	accessfile=/etc/security/access.conf  #在文件前面添加配置
@@ -244,21 +255,26 @@ account	requisite	pam_unix.so	try_first_pass
 ```
 ### pam_wheel
 使用su命令可以进行用户切换(包括提权到root)，但是su过后会获取目标用户的全部权限，利用pam_wheel模块可以限制指定的用户使用su命令。
+<br>
 编辑`/etc/pam.d/su`和`/etc/pam.d/su-l`文件，追加一行配置:
 ```
 auth required pam_wheel.so use_uid    //只有wheel组内的用户可以使用su命令
 ```
 另外两个常用参数:
+<br>
 root_only  仅在su到root时做检查，普通用户直接su不限制
+<br>
 group=GROUP_NAME    指定用户组，默认为wheel
 ### pam_umask
 开启一个会话session后设置用户的umask值。
+<br>
 编辑`/etc/pam.d/common-session`文件，设置:
 ```
 session	optional	pam_umask.so    umask=0077    //设置用户的umask为0077
 ```
 ### pam_mkhomedir
 用户登录系统时，如果HOME目录不存在，则自动创建。
+<br>
 编辑`/etc/pam.d/common-session`文件，设置:
 ```
 session  optional	pam_mkhomedir.so	umask=0077  //umask指定创建HOME的权限
