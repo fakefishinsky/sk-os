@@ -1,9 +1,11 @@
 ## SSSD
 SSSD (System Security Services Daemon) 是一个框架，其本身不提供名称解析或认证功能，但可以与AD、LDAP、Kerberos进行对接，访问远程提供的名称解析或认证服务。
-![sssd-logo](images/sssd-logo.jpg)
+<br>
+![sssd-logo](images/sssd-logo.gif)
 ### AD集中认证
 前提:
 Windows AD Server, [安装AD DS](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=1)， [创建DC](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=2)， 安装NIS组件(Identity Management for UNIX)，[创建用户](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=3)
+<br>
 ![test-user](images/ad-server-test-user.png)
 
 编辑sssd服务配置文件:
@@ -89,4 +91,5 @@ adtest@suse:/home/adtest>
 
 ### More
 更多参考请查看man帮助文档:
+<br>
 sssd, sssd.conf, sssd-ldap, sssd-krb5, sssd-simple, sssd-ipa, sssd-ad, sssd-sudo
