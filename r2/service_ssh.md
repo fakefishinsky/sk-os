@@ -1,9 +1,12 @@
 ## SSH服务安全
 SSH服务是目前Linux操作系统上最常用的远程登录服务，其安全性对Linux系统安全的重要性不言而喻。
-![openssh-logo](images/openssh-logo.png)
+<br>
+![openssh-logo](images/openssh-logo.gif)
 ### 改变默认端口
 SSH服务配置文件一般位于`/etc/ssh/sshd_config`，本文若无特殊说明均在该文件中进行的参数配置。
+<br>
 虽然端口扫描工具(eg. nmap)可以根据端口的特征判断出具体的服务，但改变SSH服务的默认端口(22)可以预防一些低级攻击者使用默认端口对系统进行攻击。
+<br>
 编辑`/etc/ssh/sshd_config`文件，设置:
 ```
 Port 7536    #或规划一个其他端口
@@ -11,6 +14,7 @@ Port 7536    #或规划一个其他端口
 必须重启ssh服务才能生效，下同。
 ### 绑定监听地址
 SSH服务默认监听本机全部接口(`ListenAddress 0.0.0.0`)，需要根据业务场景将其绑定到具体的接口上，避免全网监听，降低SSH服务被攻击的可能性。
+<br>
 例如，一个对外提供WEB服务的服务器，仅需要SSH服务监听管理平面即可。
 ```
 #ListenAddress 0.0.0.0    #注释掉，禁止全网监听
@@ -117,8 +121,11 @@ auth required pam_tally2.so onerr=fail audit silent deny=30 unlock_time=900
 account required pam_tally2.so
 ```
 上面配置pam_tally2模块是针对系统上所有的用户，但用户被锁定可能对业务正常流程有影响，可以参考[pam_tally2_custom](pam.md#pam_tally2_custom)设置例外用户。
+<br>
 其他防范暴力破解的工具:
+<br>
 [denyhosts](https://github.com/denyhosts/denyhosts)
+<br>
 [fail2ban](https://github.com/fail2ban/fail2ban)
 ### 隐藏OpenSSH版本
 隐藏或伪造OpenSSH版本可以迷惑攻击者，防止根据版本信息获取已知安全漏洞，增加攻击难度。
