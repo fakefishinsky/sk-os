@@ -1,10 +1,13 @@
 ## Audit
 Linux审计功能根据设置的审计规则监控系统事件并记录日志，对入侵检测和事后审计有重要意义。
+<br>
 ![audit-logo](images/audit-logo.jpg)
 ### 审计服务配置&开启
 * 配置文件
+
 `/etc/audit/auditd.conf`
 * 常用配置参数
+
 |参数|意义|
 |----|----|
 |log_file|指定审计日志文件位置|
@@ -15,12 +18,15 @@ Linux审计功能根据设置的审计规则监控系统事件并记录日志，
 |flush & freq|控制审计日志写入磁盘的方式、频率|
 |dispatcher|审计事件分发器（可以实现向syslog发送审计日志）|
 * 开启审计服务
+
 `service auditd start|restart`
 
 ### 审计规则配置
 可直接编辑审计规则配置文件(`/etc/audit/audit.rules`)或通过`auditctl`命令修改审计规则。
+<br>
 审计规则可分为3类:
-* 1) 审计服务控制
+* 1)审计服务控制
+
 该类规则通常在文件起始位置，如:
 ```
 # First rule - delete all
@@ -36,30 +42,49 @@ Linux审计功能根据设置的审计规则监控系统事件并记录日志，
 # -e 2: 启用审计功能，并且审计服务/规则不可更改
 -e [0|1|2]
 ```
-* 2) 监控系统文件
+* 2)监控系统文件
+
 监视对指定文件或目录的访问。
-语法:`-w path-to-file -p permissions -k keyname`<br>
+<br>
+语法:`-w path-to-file -p permissions -k keyname`
+<br>
 permissions取值范围:
+<br>
 r - read of the file
+<br>
 w - write to the file
+<br>
 x - execute the file
-a - change in the file's attribute<br>
+<br>
+a - change in the file's attribute
+<br>
 示例:
 ```
 #监视对sudo命令的执行
 -w /usr/bin/sudo -p x -k sudo_run
 ```
-* 3) 监控系统调用
-语法:`-a action,list -S syscall -F field=value -k keyname`<br>
+* 3)监控系统调用
+
+语法:`-a action,list -S syscall -F field=value -k keyname`
+<br>
 action可选值:
+<br>
 always - always create an event(常用)
-never  - never create an event<br>
+<br>
+never  - never create an event
+<br><br>
 list可选值:
+<br>
 task     -  during the fork or clone syscalls
+<br>
 exit     -  all syscall and file system audit requests are evaluated(常用)
+<br>
 user     -  events that originate in user space
-exclude  -  exclude certain events from being emitted<br>
--F可设置过滤规则<br>
+<br>
+exclude  -  exclude certain events from being emitted
+<br><br>
+-F可设置过滤规则
+<br><br>
 示例:
 ```
 #监视对内核模块的加载和卸载
@@ -68,12 +93,14 @@ exclude  -  exclude certain events from being emitted<br>
 
 ### 查看审计日志
 审计日志通常存在于`/var/log/audit/`目录下，可直接查看该目录下的文件内容，也可以使用aureport或ausearch查看感兴趣的内容。
+<br>
 如:
 ```
 root@suse:~ # aureport -k sudo_run    //key=sudo_run
 root@suse:~ # ausearch -k sudo_run
 ```
 * 审计日志一般格式
+
 ```
 type=SYSCALL msg=audit(1499741583.751:46199): arch=c000003e syscall=59 success=yes exit=0
 a0=1da3f70 a1=1fa3970 a2=1fa2ef0 a3=fc2c9fc5 items=2 ppid=21638 pid=21701
@@ -82,18 +109,24 @@ comm="sudo" exe="/usr/bin/sudo" subj=unconfined_u:unconfined_r:unconfined_t:s0-s
 type=EXECVE msg=audit(1499741583.751:46199): argc=2 a0="sudo" a1="-l"
 ```
 根据success、exit判断执行结果
+<br>
 根据uid、gid等判断执行的用户
+<br>
 根据comm、exe判断执行的文件路径
+<br>
 根据key可以过滤指定类的审计日志
 
 ### 审计日志上传日志服务器
 Linux审计功能默认不支持向远程日志服务器发送日志，需借助dispatcher进行审计事件分发。
+<br>
 在`/etc/audit/auditd.conf`文件中有如下配置参数:
 ```
 dispatcher = /sbin/audispd
 ```
 audispd负责审计事件分发，在/etc/audisp/目录下有相关配置文件。
+<br>
 要实现审计日志上传日志服务器，需将本地审计事件分发到本地syslog，然后借助syslog的功能将本地日志上传到日志服务器。
+<br>
 编辑`/etc/audisp/plugins.d/syslog.conf`文件，修改:
 ```
 active = yes
@@ -105,6 +138,7 @@ args = LOG_INFO LOG_LOCAL0
 root@suse:~ # service auditd restart
 ```
 之后就可以在本地syslog服务的配置文件中对local0.info类的日志进行处理。
+<br>
 如，在syslog-ng中（`/etc/syslog-ng/syslog-ng.conf`）进行如下配置:
 ```
 filter f_auditd { facility(local0) and level(info); };
