@@ -32,7 +32,7 @@ Effective(e):
 <br>
 This is the set of capabilities used by the  kernel  to  perform permission checks for the thread.
 <br>
-![thread-capability](images/thread-capabilities.png)
+![thread-capability](images/thread-capabilities.jpg)
 
 ### Capabilitiy List
 The following list shows the capabilities implemented on Linux, and the operations or behaviors that each capability permits:
