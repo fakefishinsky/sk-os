@@ -13,6 +13,8 @@ Linux操作系统安全技术知识。
 
 #### 内核/Kernel
 * [内核安全](kernel.md)
+* [Linux Capability 1](linux_capabilities1.md)
+* [Linux Capability 2](linux_capabilities2.md)
 
 #### 系统服务/Service
 * [SSH](service_ssh.md)
