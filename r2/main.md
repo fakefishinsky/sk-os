@@ -30,3 +30,9 @@ Linux操作系统安全技术知识。
 
 #### 授权/Authorization
 * [Sudo](sudo.md)
+
+#### 日志/Logging
+* [Logging](logging.md)
+
+#### 审计/Audit
+* [Audit](audit.md)
