@@ -26,6 +26,7 @@ Linux操作系统安全技术知识。
 * [PAM](r2/pam.md)
 * [LDAP](r2/ldap.md)
 * [SSSD](r2/sssd.md)
+* [Winbind](r2/winbind.md)
 * [Kerberos](r2/kerberos_auth_flow.md)
 
 #### 授权/Authorization
