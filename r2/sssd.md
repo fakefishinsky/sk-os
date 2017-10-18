@@ -4,7 +4,7 @@ SSSD (System Security Services Daemon) 是一个框架，其本身不提供名�
 ![sssd-logo](images/sssd-logo.gif)
 ### AD集中认证
 前提:
-Windows AD Server, [安装AD DS](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=1)， [创建DC](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=2)， 安装NIS组件(Identity Management for UNIX)，[创建用户](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=3)
+Windows AD Server, [安装AD DS](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=1)， [创建DC](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=2)， 安装NIS组件(Identity Management for UNIX)(若不安装该组件，则在sssd.conf中必须配置ldap_id_mapping=True)，[创建用户](https://www.server-world.info/en/note?os=Windows_Server_2012&p=active_directory&f=3)
 <br>
 ![test-user](images/ad-server-test-user.png)
 
@@ -37,6 +37,10 @@ ldap_group_search_base = cn=Users,dc=example,dc=com
 ldap_default_bind_dn = cn=ad query user,cn=Users,dc=example,dc=com
 ldap_default_authtok_type = password
 ldap_default_authtok = <password of ad query user>
+
+#如果windows server上没有安装NIS组件，则设置下面两行
+#ldap_id_mapping = True
+#ldap_schema = ad
 
 ldap_schema = rfc2307bis
 
