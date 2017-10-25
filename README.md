@@ -13,6 +13,7 @@ Linux操作系统安全技术知识。
 
 #### 内核/Kernel
 * [内核安全](r2/kernel.md)
+* [Proc](r2/proc-filesystem.md)
 
 #### 系统服务/Service
 * [SSH](r2/service_ssh.md)
