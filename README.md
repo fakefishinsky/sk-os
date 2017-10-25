@@ -34,3 +34,6 @@ Linux操作系统安全技术知识。
 
 #### 审计/Audit
 * [Audit](r2/audit.md)
+
+#### 其他/Others
+* [Inotify](r2/inotify.md)
