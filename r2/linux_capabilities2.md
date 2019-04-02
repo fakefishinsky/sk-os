@@ -24,7 +24,6 @@ listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
 22:02:24.437113 IP 192.168.1.20.ssh > 192.168.1.10.48793: Flags [P.], seq 3268036938:3268037134, ack 375322178, win 184, options [nop,nop,TS val 843344159 ecr 84518432], length 196
 22:02:24.437231 IP 192.168.1.10.48793 > 192.168.1.20.ssh: Flags [.], ack 196, win 129, options [nop,nop,TS val 84518434 ecr 843344143], length 0
 22:02:24.437380 IP 192.168.1.10.ssh > 192.168.1.30.65254: Flags [P.], seq 868215282:868215478, ack 3481478883, win 128, length 196
-22:02:24.437699 IP 192.168.1.20.35422 > lg-ns3.huawei.com.domain: 49796+ PTR? 116.114.71.10.in-addr.arpa. (44)
 4 packets captured		//抓包成功
 19 packets received by filter
 0 packets dropped by kernel
@@ -354,7 +353,7 @@ attach: ptrace(PTRACE_ATTACH, ...): Operation not permitted
 root      3167  0.0  0.1 161876  2024 pts/0    S+   05:47   0:00 passwd lj
 [fjl@Redhat ~]$ strace -p 3167
 Process 3167 attached - interrupt to quit		//跟踪root用户进程成功
-read(0, "huawei\n", 511)                = 7
+read(0, "1123456\n", 511)                = 7
 ioctl(0, SNDCTL_TMR_STOP or TCSETSW, {B38400 opost isig icanon echo ...}) = 0
 write(2, "\n", 1)                       = 1
 ```
