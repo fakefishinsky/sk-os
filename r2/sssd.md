@@ -22,7 +22,7 @@ domains = adserver1, adserver2    #可以配置多个AD Server
 [domain/adserver1]  #通过LDAP
 id_provider = ldap
 auth_provider = ldap
-ldap_uri = ldaps://10.10.10.10:636    #配置AD Server的IP地址，636端口为LDAPS协议
+ldap_uri = ldaps://192.168.1.10:636    #配置AD Server的IP地址，636端口为LDAPS协议
 
 ldap_tls_reqcert = allow
 ldap_tls_cacertdir = /etc/ldap.certs/
@@ -56,11 +56,11 @@ ldap_group_name = sAMAccountName
 id_provider = ldap
 
 auth_provider = krb5
-krb5_server = bes.software.huawei
-krb5_realm = BES.SOFTWARE.HUAWEI
+krb5_server = www.test.com
+krb5_realm = WWW.TEST.COM
 ldap_force_upper_case_realm = true
 
-ldap_uri = ldaps://20.20.20.20:636
+ldap_uri = ldaps://192.168.1.20:636
 
 ldap_tls_reqcert = allow
 ldap_tls_cacertdir = /etc/ldap.certs/
