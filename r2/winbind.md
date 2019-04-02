@@ -93,7 +93,6 @@ PING example.com (192.168.1.10) 56(84) bytes of data.
 64 bytes from 192.168.1.10: icmp_seq=3 ttl=61 time=7.68 ms
 64 bytes from 192.168.1.10: icmp_seq=4 ttl=61 time=7.77 ms
 
---- bes.huawei.com ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 7.672/8.143/9.446/0.760 ms
 NKG4607:/ #
